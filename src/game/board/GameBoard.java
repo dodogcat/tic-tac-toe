@@ -84,72 +84,19 @@ public class GameBoard {
     public void PrintBoard() {
         for (int row = 0; row < boardRow * 3 + 1; row++) {
             System.out.println(boardLayout[row]);
-//            for (int col = 0; col < boardCol * 6; col++) {
-//                System.out.printf(String.valueOf(boardLayout[row][col]));
-//            }
-//            System.out.printf("\n");
         }
     }
 
-    public void ChangeBoard(char player, String position){
-        int inRow = position.charAt(1) - '1';
-        int inCol = position.charAt(0) - 'a';
+    public void ChangeBoard(Horse horse){
+        int inRow = horse.getPosition()[1];
+        int inCol = horse.getPosition()[0];
+        char player = horse.getSymble();
 
         tics[inRow][inCol] = player;
         boardLayout[inRow * 3 + 2][inCol * 6 + 3] = player;
     }
 
-    public boolean CheckGameEnd(char player){
-        for(int row = 0; row < boardRow; row++){ // 행 체크
-            boolean End = true;
-            for(int col = 0; col < boardCol; col++){
-                if(tics[row][col] != player){
-                    End = false;
-                    break;
-                }
-            }
-            if (End == true){
-                return true;
-            }
-        }
-
-        for(int col = 0; col < boardCol; col++){ // 열 체크
-            boolean End = true;
-            for(int row = 0; row < boardRow; row++){
-                if(tics[row][col] != player){
-                    End = false;
-                    break;
-                }
-            }
-            if (End == true){
-                return true;
-            }
-        }
-
-        if(boardCol == boardRow){ //정사각행렬이면 대각선도 체크
-            boolean End = true; //  남동풍 방향
-            for(int row = 0; row < boardRow; row++){
-                if(tics[row][row] != player){
-                    End = false;
-                    break;
-                }
-            }
-            if (End == true){
-                return true;
-            }
-
-            End = true; //  북동풍 방향
-            for(int row = 0; row < boardRow; row++){
-                if(tics[boardRow - 1 - row][row] != player){
-                    End = false;
-                    break;
-                }
-            }
-            if (End == true){
-                return true;
-            }
-        }
-
-        return false;
+    public char[][] getTics() {
+        return tics;
     }
 }
