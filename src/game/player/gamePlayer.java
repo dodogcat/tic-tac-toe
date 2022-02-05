@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 public interface gamePlayer {
     default void myTurn(GameBoard board){
-//        board.PrintBoard();
         placeOnBoard(board);
     }
 
@@ -16,7 +15,7 @@ public interface gamePlayer {
         int[] coordinate = inputToCoordinate(input);
         Horse added = makeNewHorse(coordinate);
 
-        board.ChangeBoard(added);
+        board.addHorse(added);
     }
 
     Horse makeNewHorse(int[] coordinate);

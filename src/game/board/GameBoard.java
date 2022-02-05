@@ -1,15 +1,18 @@
 package game.board;
 
+import java.util.ArrayList;
+
 public class GameBoard {
     private int boardRow;
     private int boardCol;
+    private ArrayList<Horse> horses;
     private char[][] tics;
     private char[][] boardLayout;
 
     public GameBoard(int boardRow, int boardCol) {
         this.boardRow = boardRow;
         this.boardCol = boardCol;
-
+        this.horses = new ArrayList<>();
         this.tics = new char[boardRow][boardCol];
         this.boardLayout = new char[boardRow * 3 + 1][boardCol * 6];
 
@@ -87,12 +90,25 @@ public class GameBoard {
         }
     }
 
-    public void ChangeBoard(Horse horse){
-        int inRow = horse.getPosition()[1];
-        int inCol = horse.getPosition()[0];
-        char player = horse.getSymble();
+    public void addHorse(Horse horse){
+        this.horses.add(horse);
+        ticsUpdate();
+        boardLayoutUpdate();
+    }
 
+    private void ticsUpdate(){
+        Horse noobs = horses.get(horses.size() - 1);
+        int inRow = noobs.getPosition()[1];
+        int inCol = noobs.getPosition()[0];
+        char player = noobs.getSymble();
         tics[inRow][inCol] = player;
+    }
+
+    private void boardLayoutUpdate(){
+        Horse noobs = horses.get(horses.size() - 1);
+        int inRow = noobs.getPosition()[1];
+        int inCol = noobs.getPosition()[0];
+        char player = noobs.getSymble();
         boardLayout[inRow * 3 + 2][inCol * 6 + 3] = player;
     }
 

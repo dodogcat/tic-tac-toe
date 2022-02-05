@@ -13,15 +13,7 @@ public class Horse {
         return symble;
     }
 
-    public void setSymble(char symble) {
-        this.symble = symble;
-    }
-
     public int[] getPosition() {
         return position;
-    }
-
-    public void setPosition(int[] position) {
-        this.position = position;
     }
 }
