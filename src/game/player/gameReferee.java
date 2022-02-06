@@ -1,13 +1,14 @@
 package game.player;
 
 import game.board.GameBoard;
+import game.board.boardInterface;
 
 import java.util.ArrayList;
 
 public interface gameReferee {
-    playMan nextPlayer(ArrayList<playMan> list);
+    PlayMan nextPlayer(ArrayList<PlayMan> list);
 
-    default boolean checkEndGame(GameBoard board){
+    default boolean checkEndGame(boardInterface board){
         int boardRow = board.getTics().length;
         int boardCol = board.getTics()[0].length;
 
@@ -27,76 +28,77 @@ public interface gameReferee {
         return false;
     }
 
-    static boolean rowEnd(char[][] tics, int boardRow, int boardCol){
+    default boolean rowEnd(char[][] tics, int boardRow, int boardCol){
         for(int row = 0; row < boardRow; row++){ // 행 체크
-            if(tics[row][0] == '0'){
-                continue;
-            }
-            boolean check = true;
-            for(int col = 0; col < boardCol - 1; col++){
-                if(tics[row][col] != tics[row][col + 1]){
-                    check = false;
-                    break;
-                }
-            }
-            if(check){
+            if(oneLineCheck(tics[row])){
                 return true;
             }
         }
         return false;
     }
 
-    static boolean colEnd(char[][] tics, int boardRow, int boardCol){
-        for(int col = 0; col < boardCol; col++){ // 행 체크
-            if(tics[0][col] == '0'){
-                continue;
+    static boolean oneLineCheck(char[] line){
+        if(line[0] == '0'){
+            return false;
+        }
+
+        for(int i=0; i < line.length - 1; i++){
+            if(line[i] != line[i + 1]){
+                return false;
             }
-            boolean check = true;
-            for(int row = 0; row < boardRow - 1; row++){
-                if(tics[row][col] != tics[row + 1][col]){
-                    check = false;
-                    break;
-                }
+        }
+
+        return true;
+    }
+
+    default boolean colEnd(char[][] tics, int boardRow, int boardCol){
+        for(int col = 0; col < boardCol; col++){ // 열 체크
+            // 열 만들기
+            char[] column = new char[boardRow];
+            for(int row = 0; row < boardRow; row++){
+                column[row] = tics[row][col];
             }
-            if(check){
+
+            if(oneLineCheck(column)){
                 return true;
             }
         }
         return false;
     }
 
-    static boolean diagonalEnd(char[][] tics, int boardRow, int boardCol){
+    default boolean diagonalEnd(char[][] tics, int boardRow, int boardCol){
         // 정사각일때만 비교
         if(boardRow != boardCol){
             return false;
         }
 
-        for(int row = 0; row < boardRow - 1; row++){ //  '\'방향 대각선
-            if(tics[0][0] == '0'){
-                return false;
-            }
-            if(tics[row][row] != tics[row + 1][row + 1]){
-                return false;
-            }
+        char[] diagonal = new char[boardRow];
+        for(int row = 0; row < boardRow; row++){ //  '\'방향 대각선
+            diagonal[row] = tics[row][row];
         }
-        return true;
+
+        if(oneLineCheck(diagonal)){
+            return true;
+        }
+
+        return false;
     }
 
-    static boolean diagonalReflexionEnd(char[][] tics, int boardRow, int boardCol){
+    default boolean diagonalReflexionEnd(char[][] tics, int boardRow, int boardCol){
         // 정사각일때만 비교
         if(boardRow != boardCol){
             return false;
         }
 
-        for(int row = 0; row < boardRow - 1; row++){ //  '/'방향 대각선
-            if(tics[(boardRow - 1)][0] == '0'){
-                return false;
-            }
-            if(tics[(boardRow - 1) - row][row] != tics[(boardRow - 1) - row - 1][row + 1]){
-                return false;
-            }
+        char[] diagonal = new char[boardRow];
+        for(int row = 0; row < boardRow; row++){ //  '/'방향 대각선
+            diagonal[row] = tics[boardRow - 1 - row][row];
         }
 
-        return true;
+        if(oneLineCheck(diagonal)){
+            return true;
+        }
+
+        return false;
     }
 }

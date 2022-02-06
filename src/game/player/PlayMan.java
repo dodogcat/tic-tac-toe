@@ -2,12 +2,13 @@ package game.player;
 
 import game.board.GameBoard;
 import game.board.Horse;
+import game.board.boardInterface;
 
-public class playMan extends Man implements gamePlayer, Comparable{
-    public int priority;
-    public char symbol;
+public class PlayMan extends Man implements gamePlayer, Comparable{
+    private int priority;
+    private char symbol;
 
-    public playMan(int priority, char symbol, String real) {
+    public PlayMan(int priority, char symbol, String real) {
         this.priority = priority;
         this.symbol = symbol;
         this.setRealName(real);
@@ -30,12 +31,12 @@ public class playMan extends Man implements gamePlayer, Comparable{
     }
 
     @Override
-    public void myTurn(GameBoard board) {
+    public void myTurn(boardInterface board) {
         gamePlayer.super.myTurn(board);
     }
 
     @Override
-    public void placeOnBoard(GameBoard board) {
+    public void placeOnBoard(boardInterface board) {
         gamePlayer.super.placeOnBoard(board);
     }
 
@@ -51,7 +52,7 @@ public class playMan extends Man implements gamePlayer, Comparable{
 
     @Override
     public int compareTo(Object o) {
-        playMan a= (playMan) o;
+        PlayMan a= (PlayMan) o;
         if(a.getPriority() < priority){
             return 1;
         }

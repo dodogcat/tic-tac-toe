@@ -1,16 +1,17 @@
 package game.player;
 
-import game.board.GameBoard;
+
 import game.board.Horse;
+import game.board.boardInterface;
 
 import java.util.Scanner;
 
 public interface gamePlayer {
-    default void myTurn(GameBoard board){
+    default void myTurn(boardInterface board){
         placeOnBoard(board);
     }
 
-    default void placeOnBoard (GameBoard board){
+    default void placeOnBoard (boardInterface board){
         String input = playerInput();
         int[] coordinate = inputToCoordinate(input);
         Horse added = makeNewHorse(coordinate);
@@ -44,4 +45,6 @@ public interface gamePlayer {
 
         return transfer;
     }
+
+    String getRealName();
 }

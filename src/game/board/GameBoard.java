@@ -2,7 +2,7 @@ package game.board;
 
 import java.util.ArrayList;
 
-public class GameBoard {
+public class GameBoard implements boardInterface {
     private int boardRow;
     private int boardCol;
     private ArrayList<Horse> horses;
@@ -84,13 +84,16 @@ public class GameBoard {
         }
     }
 
+
+    @Override
     public void PrintBoard() {
         for (int row = 0; row < boardRow * 3 + 1; row++) {
             System.out.println(boardLayout[row]);
         }
     }
 
-    public void addHorse(Horse horse){
+    @Override
+    public void addHorse(Horse horse) {
         this.horses.add(horse);
         ticsUpdate();
         boardLayoutUpdate();
@@ -112,6 +115,7 @@ public class GameBoard {
         boardLayout[inRow * 3 + 2][inCol * 6 + 3] = player;
     }
 
+    @Override
     public char[][] getTics() {
         return tics;
     }
